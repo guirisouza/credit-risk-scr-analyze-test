@@ -27,11 +27,9 @@ def calculate_risk(risks):
     return risk
     
 def reverse_data(date):
-    print(date)
     date = date.split('-')
     date.reverse()
     new_date = '/'.join(date)
-    print(new_date)
     return new_date
     
 

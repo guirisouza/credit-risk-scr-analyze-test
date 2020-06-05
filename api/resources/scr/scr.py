@@ -12,7 +12,6 @@ def src_data_request():
 
 class Scr:
     def on_get(self, req, res):
-        print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
         data = src_data_request()
         due_lst = []
         for due in data['operation_items']:
