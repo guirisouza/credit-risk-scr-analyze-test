@@ -100,6 +100,7 @@ class Report:
         }
         a_operations = sorted_due(operations_items, 'a')
         b_operations = sorted_due(operations_items, 'h')
+        a_operations['data'][0]['total_value_dues'] = a_operations['risk']['a']
         data_operations.append(a_operations['data'])
         data_operations.append(b_operations['data'])
         scr_stats = calculate_risk([a_operations['risk'], b_operations['risk']])
