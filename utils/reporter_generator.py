@@ -12,7 +12,7 @@ env = Environment(loader=FileSystemLoader('.'))
 env.filters['currencyformat'] = currencyformat
 template = env.get_template("./templates/src-full-template.html")
 
-
-def reporter_generator(data, scr_status):
-    html_out = template.render(data=data, scr_stats=scr_status)
+def reporter_generator(data, scr_status, infos):
+    print("@@@@@@@@@", infos)
+    html_out = template.render(data=data, scr_stats=scr_status, infos=infos)
     HTML(string=html_out).write_pdf("report.pdf")

@@ -32,10 +32,6 @@
                 max-width: 7%;
                 margin-left: 20px;            }
 
-            .header-title-container div {
-                /* margin-left: 100px; */
-            }
-
             .doc-number-container {
                 display: flex;
                 height: 100%;
@@ -120,7 +116,57 @@
                 font-weight: 700;
             }
 
+            .rank-full-container {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                height: 80px;
+                align-items: center;
+                margin-bottom: 15px;
+                border-radius: 10px;
+                background-color: #ffffff;
+                justify-content: center;
+                align-items: center;
+            }
 
+            .rank-full-container span {
+                font-weight: 700;
+            }
+
+            .rank-container {
+                display: flex;
+                margin-top: 10px;
+                justify-content: center;
+                align-items: center;
+                width: 1000px;
+            }
+
+            .rank-select {
+                border: 3px blue solid;
+            }
+
+            .rank-container .good {
+                height: 8px;
+                width: 50px;
+                background: rgb(0, 255, 0);
+                border-radius:10px;
+            }
+
+            .rank-container .medium {
+                height: 8px;
+                margin-left: 8px;
+                margin-right: 8px;
+                width: 50px;
+                background-color: orange;
+                border-radius:10px;
+            }
+
+            .rank-container .bad {
+                height: 8px;
+                width: 50px;
+                background-color: red;
+                border-radius:10px;
+            }
 
             .container-item {
                 margin-top: 15px;
@@ -215,15 +261,15 @@
             <div class="general-items">
                 <div class="general-item">
                     <p>Data de Início do Relacionamento</p>
-                    <span>07/04/2020</span>
+                    <span>{{ infos['start_relationship'] }}</span>
                 </div>
                 <div class="general-item">
                     <p>Data de Referência</p>
-                    <span>07/04/2020</span>
+                    <span>{{ infos['reference_data'] }}</span>
                 </div>
                 <div class="general-item">
                     <p>Quantidade de Instituições</p>
-                    <span>07/04/2020</span>
+                    <span>{{infos['operation_count']}}</span>
                 </div>
             </div>
             <div class="general-stats">
@@ -235,6 +281,22 @@
                     <p>Total</p>
                     <span>{{ scr_stats['total']}}%</span>
                 </div>
+            </div>
+        </div>
+        <div class='rank-full-container'>
+            {% if  scr_stats['total'] >= 66 %}
+                <span> Muito Arriscado</span>
+            {% endif %}
+            {% if  scr_stats['total'] > 33 and scr_stats['total'] < 66 %}
+                <span> Arriscado</span>
+            {% endif %}
+            {%  if scr_stats['total'] < 33 %}
+                <span> Seguro</span>
+            {% endif %}
+            <div class="rank-container">
+                <div class="bad {{ 'rank-select' if scr_stats['total'] >= 66 }}"></div>
+                <div class="medium {{ 'rank-select' if scr_stats['total'] > 33 and scr_stats['total'] < 66}}"></div>
+                <div class="good {{ 'rank-select' if scr_stats['total'] < 33 }}"></div>
             </div>
         </div>
         <div class="container-item">

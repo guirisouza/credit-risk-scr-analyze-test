@@ -26,6 +26,14 @@ def calculate_risk(risks):
 
     return risk
     
+def reverse_data(date):
+    print(date)
+    date = date.split('-')
+    date.reverse()
+    new_date = '/'.join(date)
+    print(new_date)
+    return new_date
+    
 
 def src_data_request():
     try:
@@ -85,13 +93,19 @@ def sorted_due(due_operations, operation_code):
 class Report:
     def on_get(self, req, res):
         data_operations = []
-        operations_items = src_data_request()['operation_items']
+        data = src_data_request()
+        operations_items = data['operation_items']
+        infos = {
+            'reference_data': reverse_data(data['reference_date']),
+            'start_relationship': reverse_data(data['start_relationship']),
+            'operation_count': data['operation_count']
+        }
         a_operations = sorted_due(operations_items, 'a')
         b_operations = sorted_due(operations_items, 'h')
         data_operations.append(a_operations['data'])
         data_operations.append(b_operations['data'])
         scr_stats = calculate_risk([a_operations['risk'], b_operations['risk']])
-        reporter_generator(data_operations, scr_stats)
+        reporter_generator(data_operations, scr_stats, infos)
 
         filename="./report.pdf"
         res.downloadable_as = filename
