@@ -7,7 +7,6 @@
 
         font-family: 'Dosis', sans-serif;
 -->
-
 <html>
     <head>
         <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">        
@@ -22,6 +21,7 @@
                 display: flex;
                 height: 100%;
                 height: 80px;
+                align-items: center;
                 margin-bottom: 15px;
                 border-radius: 10px;
                 background-color: #ffffff;
@@ -29,9 +29,13 @@
                 align-items: center;
             }
             .header-title-container img {
-                max-width: 10%;
-                margin-left: 20px;
+                max-width: 7%;
+                margin-left: 20px;            }
+
+            .header-title-container div {
+                /* margin-left: 100px; */
             }
+
             .doc-number-container {
                 display: flex;
                 height: 100%;
@@ -123,26 +127,72 @@
             }
 
             .item-due {
+                color: white;
+                font-weight: 600;
                 display: flex;
+                margin-top: 15px;
+                justify-content: space-between;
                 height: 100%;
                 height: 50px;
                 border-radius: 10px 10px 0 0;
                 background-color: #2155d3;
             }
 
+            .item-due div {
+                margin-left: 15px;
+                width: 700px;
+            }
+
             .sub-item-due {
                 display: flex;
+                font-weight: 600;
+                align-items: center;
+                justify-content: space-between;
                 height: 100%;
                 height: 50px;
-                background-color: #a5a5a5;
+                background-color: #b3cde0;
+            }
+
+            .sub-item-due div {
+                margin-left: 15px;
+                width: 700px;
             }
             
             .sub-sub-item-due {
+                color: #111111;
+                font-weight: 200;
                 display: flex;
+                align-items: center;
+                justify-content: space-around;
                 height: 100%;
-                height: 50px;
+                height: 60px;
                 background-color: #fff;
                 border-bottom: solid 1px #a5a5a5;
+            }
+
+            .sub-sub-item-due div {
+                align-self: center;
+                margin-left: 15px;
+                width: 700px;
+            }
+
+            .item-total-extra {
+                color: white;
+                font-weight: 600;
+                display: flex;
+                margin-top: 15px;
+                margin-bottom: 15px;
+                justify-content: space-between;
+                height: 100%;
+                height: 50px;
+                border-radius: 10px;
+                background-color: #2155d3;
+            }
+
+            .item-total-extra div {
+                align-self: center;
+                margin-left: 15px;
+                width: 700px;
             }
 
             @page {
@@ -158,7 +208,9 @@
                 <img src="../images/logo_qi.png"/>
             </div>
         </div>
-        <div class="doc-number-container"></div>
+        <div class="doc-number-container">
+            Nº DOC:
+        </div>
         <div class="general-info-src">
             <div class="general-items">
                 <div class="general-item">
@@ -166,11 +218,11 @@
                     <span>07/04/2020</span>
                 </div>
                 <div class="general-item">
-                    <p>Data de Início do Relacionamento</p>
+                    <p>Data de Referência</p>
                     <span>07/04/2020</span>
                 </div>
                 <div class="general-item">
-                    <p>Data de Início do Relacionamento</p>
+                    <p>Quantidade de Instituições</p>
                     <span>07/04/2020</span>
                 </div>
             </div>
@@ -181,21 +233,82 @@
                 </div>
                 <div class="general-stats-item">
                     <p>Total</p>
-                    <span>5,85</span>
+                    <span>{{ scr_stats['total']}}%</span>
                 </div>
             </div>
         </div>
         <div class="container-item">
-            <div class="item-due"></div>
-            <div class="sub-item-due"></div>
-            <div class="sub-sub-item-due"></div>
-            <div class="sub-sub-item-due"></div>
-        </div>
-        <div class="container-item">
-            <div class="item-due"></div>
-            <div class="sub-item-due"></div>
-            <div class="sub-sub-item-due"></div>
-            <div class="sub-sub-item-due"></div>
+            <div class="item-total-extra">
+                <div><p>Risco Total (F+G+H+I)</p></div>
+                <div><p style="margin-left: 70px;">R$ -</p></div>
+                <div><p>R$ {{scr_stats['total_risk'] | currencyformat}} </p></div>
+            </div>
+            {% for type_due in data %}
+                {% for due_lst in type_due%}
+                    {% if loop.first %}
+                        <div class="item-due">
+                            <div><p>{{ due_lst['due_type_group'] }}</p></div>
+                            <div><p style="margin-left: 70px;">R$ -</p></div>
+                            <div><p>R$ {{ due_lst['total_value_dues'] | currencyformat}}</p></div>
+                        </div>
+                    {% endif %}
+                        {% for due in due_lst['dues'] %}
+                            {% if loop.first %}
+                                <div class="sub-item-due">
+                                    <div><p>{{ due['due_type']['description'] }}</p></div>
+                                    <div><p style="margin-left: 70px;">R$ -</p></div>
+                                    <div><p>{{ due_lst['total_value'] | currencyformat}}</p></div>
+                                </div>
+                                <div class="sub-sub-item-due">
+                                    <div><p style="margin-left: 40px;">{{ due['category_sub']['description'] }}</p></div>
+                                    <div><p style="margin-left: 70px;">R$ -</p></div>
+                                    <div><p>R$ {{ due['due_value'] | currencyformat }}</p></div>
+                                </div>
+                            {% else %}
+                                <div class="sub-sub-item-due">
+                                    <div><p style="margin-left: 40px;">{{ due['category_sub']['description'] }}</p></div>
+                                    <div><p style="margin-left: 70px;">R$ -</p></div>
+                                    <div><p>R$ {{ due['due_value'] | currencyformat }}</p></div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}      
+            {% endfor %}
+            <div class="item-total-extra">
+                <div><p>Vencido (B)</p></div>
+                <div><p style="margin-left: 70px;">R$ -</p></div>
+                <div><p>R$ - </p></div>
+            </div>
+            <div class="item-total-extra">
+                <div><p>Responsabilidade Total (f)=A+B+C+D+E</p></div>
+                <div><p style="margin-left: 70px;">R$ -</p></div>
+                <div><p>{{ scr_stats['total_responsability'] | currencyformat }} </p></div>
+            </div>
+            <div class="item-total-extra">
+                <div><p>Prejuizo (C)</p></div>
+                <div><p style="margin-left: 70px;">R$ -</p></div>
+                <div><p>R$ - </p></div>
+            </div>
+            <div class="item-total-extra">
+                <div><p>Repasses Interfinanceiros (D)</p></div>
+                <div><p style="margin-left: 70px;">R$ -</p></div>
+                <div><p>R$ - </p></div>
+            </div>
+            <div class="item-total-extra">
+                <div><p>Créditos a Liberar (G)</p></div>
+                <div><p style="margin-left: 70px;">R$ -</p></div>
+                <div><p>R$ - </p></div>
+            </div>
+            <div class="item-total-extra">
+                <div><p>Limite de Crédito (H)</p></div>
+                <div><p style="margin-left: 70px;">R$ -</p></div>
+                <div><p>R$ - </p></div>
+            </div>
+            <div class="item-total-extra">
+                <div><p>Risco Indireto (I)</p></div>
+                <div><p style="margin-left: 70px;">R$ -</p></div>
+                <div><p>R$ - </p></div>
+            </div>
         </div>
     </body>
 </html>
