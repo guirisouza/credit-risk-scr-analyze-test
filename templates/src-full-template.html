@@ -303,7 +303,7 @@
             <div class="item-total-extra">
                 <div><p>Risco Total (F+G+H+I)</p></div>
                 <div><p style="margin-left: 70px;">R$ -</p></div>
-                <div><p>R$ {{scr_stats['total_risk'] | currencyformat}} </p></div>
+                <div><p>{{scr_stats['total_risk'] | currencyformat}} </p></div>
             </div>
             {% for type_due in data %}
                 {% for due_lst in type_due%}
@@ -311,7 +311,7 @@
                         <div class="item-due">
                             <div><p>{{ due_lst['due_type_group'] }}</p></div>
                             <div><p style="margin-left: 70px;">R$ -</p></div>
-                            <div><p>R$ {{ due_lst['total_value_dues'] | currencyformat}}</p></div>
+                            <div><p>{{ due_lst['total_value_dues'] | currencyformat}}</p></div>
                         </div>
                     {% endif %}
                         {% for due in due_lst['dues'] %}

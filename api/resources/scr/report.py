@@ -73,7 +73,7 @@ def sorted_due(due_operations, operation_code):
                 dct_due['due_description'] = due['due_type']['description']
                 dct_due['category_description'] = due['category_sub']['description']
                 dct_due['total_value'] += round(due['due_value'], 2)
-                total_value_dues += round(dct_due['total_value'], 2)
+        total_value_dues += round(dct_due['total_value'], 2)
         dct_due['total_value_dues'] = round(total_value_dues,2)
         risk[operation_code] = round(dct_due['total_value_dues'], 2)
         ordered_operations.append(dct_due)
