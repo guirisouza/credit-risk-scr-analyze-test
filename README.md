@@ -23,5 +23,5 @@ No root do projeto rodar:
 
 ## guideline da API
 
-(GET) /api/scr/report  ---> gera o relatório em PDF
-(GET) /api/scr/        ---> retorna json consolidado do doc scr
+(GET) /api/scr/report  ---> gera o relatório em PDF <br>
+(GET) /api/scr         ---> retorna json consolidado do doc scr
