@@ -305,6 +305,11 @@
                 <div><p style="margin-left: 70px;">R$ -</p></div>
                 <div><p>{{scr_stats['total_risk'] | currencyformat}} </p></div>
             </div>
+            <div class="item-total-extra">
+                <div><p>Carteira de Cŕedito (A+B+C)</p></div>
+                <div><p style="margin-left: 70px;">R$ -</p></div>
+                <div><p>{{scr_stats['credit'] | currencyformat}} </p></div>
+            </div>
             {% for type_due in data %}
                 {% for due_lst in type_due%}
                     {% if loop.first %}
