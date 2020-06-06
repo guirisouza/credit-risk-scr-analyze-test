@@ -269,7 +269,7 @@
                 </div>
                 <div class="general-item">
                     <p>Quantidade de Instituições</p>
-                    <span>{{infos['operation_count']}}</span>
+                    <span>{{infos['financial_institution_count']}}</span>
                 </div>
             </div>
             <div class="general-stats">
@@ -309,7 +309,7 @@
                 {% for due_lst in type_due%}
                     {% if loop.first %}
                         <div class="item-due">
-                            <div><p>{{ due_lst['due_type_group'] }}</p></div>
+                            <div><p>{{ due_lst['due_type_group'] }} ({{ due_lst['word_identifier'] | upper }}) </p></div>
                             <div><p style="margin-left: 70px;">R$ -</p></div>
                             <div><p>{{ due_lst['total_value_dues'] | currencyformat}}</p></div>
                         </div>
