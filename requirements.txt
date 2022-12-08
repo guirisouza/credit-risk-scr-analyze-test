@@ -6,7 +6,7 @@ bpython==0.19
 CacheControl==0.12.6
 cairocffi==1.1.0
 CairoSVG==2.4.2
-certifi==2019.11.28
+certifi==2022.12.7
 cffi==1.14.0
 chardet==3.0.4
 colorama==0.4.3
